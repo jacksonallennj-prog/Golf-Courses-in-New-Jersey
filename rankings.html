@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NJ Golf Greens | Rankings & Arcade</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <!-- Shared Navigation -->
+  <nav class="navbar">
+    <div class="nav-logo">⛳ NJ GOLF GREENS</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="courses.html">Course Vault</a></li>
+      <li><a href="rankings.html" class="active">Rankings & Arcade</a></li>
+    </ul>
+    <button class="theme-btn" id="theme-btn">🌙 Mode</button>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-badge">LEADERBOARDS & INTERACTIVE ARCADE</div>
+    <h1>Rankings, Polls & Launch Simulator</h1>
+    <p>Compare the top 10 lists, vote in community polls, and hit the driving range!</p>
+  </header>
+
+  <main class="container">
+    
+    <!-- Top 10 Private vs Public Lists -->
+    <div class="grid-2col">
+      <div class="card">
+        <h2>🔒 Top 10 Private Courses</h2>
+        <ol class="ranked-list">
+          <li><strong>Pine Valley</strong> (Pine Valley)</li>
+          <li><strong>Baltusrol - Lower</strong> (Springfield)</li>
+          <li><strong>Somerset Hills</strong> (Bernardsville)</li>
+          <li><strong>Plainfield Country Club</strong> (Edison)</li>
+          <li><strong>Ridgewood Country Club</strong> (Paramus)</li>
+          <li><strong>Baltusrol - Upper</strong> (Springfield)</li>
+          <li><strong>Hollywood Golf Club</strong> (Deal)</li>
+          <li><strong>Bayonne Golf Club</strong> (Bayonne)</li>
+          <li><strong>Galloway National</strong> (Galloway)</li>
+          <li><strong>Liberty National</strong> (Jersey City)</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h2>⛳ Top 10 Public Courses</h2>
+        <ol class="ranked-list">
+          <li><strong>Ballyowen</strong> (Hamburg) — <a href="https://www.crystalgolfresort.com/golf/courses/ballyowen" target="_blank" rel="noopener noreferrer" class="custom-link">Book ↗</a></li>
+          <li><strong>Neshanic Valley</strong> (Neshanic) — <a href="https://www.neshanicvalleygolf.com/" target="_blank" rel="noopener noreferrer" class="custom-link">Book ↗</a></li>
+          <li><strong>Seaview - Bay Course</strong> (Galloway) — <a href="https://www.seaviewgolf.com/" target="_blank" rel="noopener noreferrer" class="custom-link">Book ↗</a></li>
+          <li><strong>Twisted Dune</strong> (Egg Harbor) — <a href="https://www.twisteddune.com/" target="_blank" rel="noopener noreferrer" class="custom-link">Book ↗</a></li>
+          <li><strong>Atlantic City Country Club</strong> (Northfield) — <a href="https://account.ablegolf.com/book/ac-country-club/" target="_blank" rel="noopener noreferrer" class="custom-link">Book ↗</a></li>
+          <li><strong>Architects Golf Club</strong> (Lopatcong) — <a href="https://www.thearchitectsgolfclub.com/" target="_blank" rel="noopener noreferrer" class="custom-link">Book ↗</a></li>
+          <li><strong>Heron Glen</strong> (Ringoes) — <a href="https://www.heronglen.com/" target="_blank" rel="noopener noreferrer" class="custom-link">Book ↗</a></li>
+          <li><strong>Berkshire Valley</strong> (Oak Ridge) — <a href="https://www.morriscountyparks.net/golf/berkshire-valley/" target="_blank" rel="noopener noreferrer" class="custom-link">Book ↗</a></li>
+          <li><strong>Hominy Hill</strong> (Colts Neck) — <a href="https://www.monmouthcountyparks.com/page.aspx?iD=2528" target="_blank" rel="noopener noreferrer" class="custom-link">Book ↗</a></li>
+          <li><strong>McCullough's Emerald</strong> (Egg Harbor) — <a href="https://www.mcculloughsgolf.com/" target="_blank" rel="noopener noreferrer" class="custom-link">Book ↗</a></li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Poll 1: Do you agree with the rankings? -->
+    <div class="card">
+      <h2>📊 Community Poll #1: Do you agree with these rankings?</h2>
+      <p>Cast your vote on our NJ Golf Leaderboards:</p>
+      <div class="poll-buttons">
+        <button class="action-btn glow-btn" id="poll1-yes">👍 Yes, Spot On!</button>
+        <button class="action-btn outline-btn" id="poll1-no">👎 No, Needs Tweaking</button>
+      </div>
+      <div id="poll1-result" class="status-box" style="display:none;"></div>
+    </div>
+
+    <!-- Poll 2: Favorite NJ Course Input -->
+    <div class="card">
+      <h2>📝 Community Poll #2: Submit Your Favorite NJ Course</h2>
+      <div class="input-group">
+        <label for="fav-course-input">Type your #1 favorite NJ golf course:</label>
+        <input type="text" id="fav-course-input" placeholder="e.g. Twisted Dune" class="modern-input">
+      </div>
+      <button class="action-btn glow-btn" id="submit-fav-btn" style="margin-top: 15px;">Submit My Favorite</button>
+      <div id="poll2-result" class="status-box" style="display:none;"></div>
+    </div>
+
+    <!-- Smart Caddie Feature -->
+    <div class="card">
+      <h2>🧠 Smart Caddie Club Selector</h2>
+      <p style="margin-bottom: 15px;">Input your remaining distance to the pin:</p>
+      <div class="input-group">
+        <input type="number" id="user-input" placeholder="e.g. 150" class="modern-input">
+      </div>
+      <button class="action-btn glow-btn" id="submit-btn" style="margin-top: 15px;">Get Club Recommendation</button>
+      <p id="display-text" class="status-box">Your caddie recommendation will display here...</p>
+    </div>
+
+    <!-- 2D Launch Simulator Game -->
+    <div class="card game-card">
+      <h2>🏌️ 2D Golf Launch Simulator</h2>
+      <p>Click <strong>SWING CLUB</strong> to launch your ball down the range! Target flags award bonus points.</p>
+
+      <div class="game-hud">
+        <div class="hud-item">
+          <span class="hud-label">LAST DRIVE</span>
+          <span class="hud-value" id="drive-dist">0 YDS</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">TOTAL SCORE</span>
+          <span class="hud-value" id="game-score">0</span>
+        </div>
+      </div>
+
+      <div class="canvas-wrapper">
+        <canvas id="golf-canvas" width="500" height="320"></canvas>
+      </div>
+
+      <button class="action-btn glow-btn swing-btn-large" id="swing-btn">⛳ SWING CLUB!</button>
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
