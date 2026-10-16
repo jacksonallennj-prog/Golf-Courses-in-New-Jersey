@@ -10,35 +10,9 @@ function toggleDarkMode() {
   document.body.classList.toggle("light-mode");
 }
 
-// Smart Caddie Logic (If / Else Decision Engine)
-function updateUserText() {
-  const inputField = document.getElementById("user-input");
-  const displayElement = document.getElementById("display-text");
-  if (!inputField || !displayElement) return;
-
-  const yards = parseInt(inputField.value.trim());
-  let decision = "";
-
-  if (isNaN(yards) || yards <= 0) {
-    decision = "⚠️ Please enter a valid distance in yards!";
-  } else if (yards > 230) {
-    decision = "🏌️ " + yards + " Yards: Pull out the DRIVER off the tee for max power!";
-    fireConfetti();
-  } else if (yards >= 170 && yards <= 230) {
-    decision = "🪵 " + yards + " Yards: Hit a smooth 3-Wood or Hybrid!";
-  } else if (yards >= 120 && yards < 170) {
-    decision = "🎯 " + yards + " Yards: Mid Iron distance (7i or 8i). Aim straight for the flag!";
-  } else if (yards < 120) {
-    decision = "⛳ " + yards + " Yards: Take a Wedge (PW/SW) for a soft landing on the green!";
-  }
-
-  displayElement.innerText = decision;
-  inputField.value = "";
-}
-
 // Poll #1 Logic (Agree / Disagree)
-let poll1YesVotes = 142;
-let poll1NoVotes = 28;
+let poll1YesVotes = 184;
+let poll1NoVotes = 32;
 
 function votePoll1(agreed) {
   if (agreed) poll1YesVotes++;
@@ -50,7 +24,7 @@ function votePoll1(agreed) {
   const resultBox = document.getElementById("poll1-result");
   if (resultBox) {
     resultBox.style.display = "block";
-    resultBox.innerHTML = `✅ Thank you for voting! <br> <strong>Results:</strong> ${yesPct}% Agree (${poll1YesVotes} votes) vs ${100 - yesPct}% Disagree (${poll1NoVotes} votes).`;
+    resultBox.innerHTML = `✅ Thank you for voting! <br> <strong>Current Community Results:</strong> ${yesPct}% Agree (${poll1YesVotes} votes) vs ${100 - yesPct}% Disagree (${poll1NoVotes} votes).`;
   }
   fireConfetti();
 }
@@ -74,78 +48,99 @@ function submitFavoriteCourse() {
   input.value = "";
 }
 
+// Smart Caddie Logic (If / Else Decision Engine)
+function updateUserText() {
+  const inputField = document.getElementById("user-input");
+  const displayElement = document.getElementById("display-text");
+  if (!inputField || !displayElement) return;
+
+  const yards = parseInt(inputField.value.trim());
+  let decision = "";
+
+  if (isNaN(yards) || yards <= 0) {
+    decision = "⚠️ Please enter a valid distance in yards!";
+  } else if (yards > 230) {
+    decision = "🏌️ " + yards + " Yards: Pull out the DRIVER off the tee for max distance!";
+    fireConfetti();
+  } else if (yards >= 170 && yards <= 230) {
+    decision = "🪵 " + yards + " Yards: Hit a smooth 3-Wood or Hybrid!";
+  } else if (yards >= 120 && yards < 170) {
+    decision = "🎯 " + yards + " Yards: Mid Iron distance (7i or 8i). Aim straight for the flag!";
+  } else if (yards < 120) {
+    decision = "⛳ " + yards + " Yards: Take a Wedge (PW/SW) for a soft landing on the green!";
+  }
+
+  displayElement.innerText = decision;
+  inputField.value = "";
+}
+
 // =========================================
-// 2D GOLF LAUNCH SIMULATOR (CANVAS ENGINE)
+// GAME 1: 2D GOLF LAUNCH SIMULATOR
 // =========================================
-let canvas, ctx;
+let canvas1, ctx1;
 let ballX = 35;
 let ballY = 260;
 let ballVX = 0;
 let ballVY = 0;
 let isShotActive = false;
-let score = 0;
+let score1 = 0;
 
 function drawDrivingRange() {
-  canvas = document.getElementById("golf-canvas");
-  if (!canvas) return;
-  ctx = canvas.getContext("2d");
+  canvas1 = document.getElementById("golf-canvas");
+  if (!canvas1) return;
+  ctx1 = canvas1.getContext("2d");
 
-  // Sky Gradient
-  const skyGradient = ctx.createLinearGradient(0, 0, 0, 190);
+  const skyGradient = ctx1.createLinearGradient(0, 0, 0, 190);
   skyGradient.addColorStop(0, '#0284c7');
   skyGradient.addColorStop(1, '#0f766e');
-  ctx.fillStyle = skyGradient;
-  ctx.fillRect(0, 0, canvas.width, 190);
+  ctx1.fillStyle = skyGradient;
+  ctx1.fillRect(0, 0, canvas1.width, 190);
 
-  // Grass Fairway
-  ctx.fillStyle = "#15803d";
-  ctx.fillRect(0, 190, canvas.width, 130);
+  ctx1.fillStyle = "#15803d";
+  ctx1.fillRect(0, 190, canvas1.width, 130);
 
-  // Tee Mat
-  ctx.fillStyle = "#047857";
-  ctx.fillRect(25, 262, 30, 8);
+  ctx1.fillStyle = "#047857";
+  ctx1.fillRect(25, 262, 30, 8);
 
-  // Target Greens
   drawTargetGreen(180, 220, "150 YDS");
   drawTargetGreen(320, 220, "250 YDS");
   drawTargetGreen(440, 220, "350 YDS");
 
-  // Golf Ball
-  ctx.save();
-  ctx.shadowColor = "rgba(255, 255, 255, 0.8)";
-  ctx.shadowBlur = 8;
-  ctx.fillStyle = "#ffffff";
-  ctx.beginPath();
-  ctx.arc(ballX, ballY, 6, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.restore();
+  ctx1.save();
+  ctx1.shadowColor = "rgba(255, 255, 255, 0.8)";
+  ctx1.shadowBlur = 8;
+  ctx1.fillStyle = "#ffffff";
+  ctx1.beginPath();
+  ctx1.arc(ballX, ballY, 6, 0, Math.PI * 2);
+  ctx1.fill();
+  ctx1.restore();
 }
 
 function drawTargetGreen(x, y, label) {
-  ctx.fillStyle = "#34d399";
-  ctx.beginPath();
-  ctx.ellipse(x, y, 28, 12, 0, 0, Math.PI * 2);
-  ctx.fill();
+  ctx1.fillStyle = "#34d399";
+  ctx1.beginPath();
+  ctx1.ellipse(x, y, 28, 12, 0, 0, Math.PI * 2);
+  ctx1.fill();
 
-  ctx.strokeStyle = "#ffffff";
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(x, y);
-  ctx.lineTo(x, y - 24);
-  ctx.stroke();
+  ctx1.strokeStyle = "#ffffff";
+  ctx1.lineWidth = 2;
+  ctx1.beginPath();
+  ctx1.moveTo(x, y);
+  ctx1.lineTo(x, y - 24);
+  ctx1.stroke();
 
-  ctx.fillStyle = "#ef4444";
-  ctx.beginPath();
-  ctx.moveTo(x, y - 24);
-  ctx.lineTo(x + 12, y - 18);
-  ctx.lineTo(x, y - 12);
-  ctx.closePath();
-  ctx.fill();
+  ctx1.fillStyle = "#ef4444";
+  ctx1.beginPath();
+  ctx1.moveTo(x, y - 24);
+  ctx1.lineTo(x + 12, y - 18);
+  ctx1.lineTo(x, y - 12);
+  ctx1.closePath();
+  ctx1.fill();
 
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "bold 11px system-ui";
-  ctx.textAlign = "center";
-  ctx.fillText(label, x, y + 22);
+  ctx1.fillStyle = "#ffffff";
+  ctx1.font = "bold 11px system-ui";
+  ctx1.textAlign = "center";
+  ctx1.fillText(label, x, y + 22);
 }
 
 function swingClub() {
@@ -173,32 +168,113 @@ function animateShot() {
     ballY = 260;
     isShotActive = false;
 
-    const calculatedYards = Math.floor((ballX / canvas.width) * 400);
+    const calculatedYards = Math.floor((ballX / canvas1.width) * 400);
     const distElem = document.getElementById("drive-dist");
     if (distElem) distElem.innerText = calculatedYards + " YDS";
 
     if (calculatedYards >= 300) {
-      score += 100;
+      score1 += 100;
       fireConfetti();
     } else if (calculatedYards >= 150) {
-      score += 50;
+      score1 += 50;
     } else {
-      score += 20;
+      score1 += 20;
     }
     const scoreElem = document.getElementById("game-score");
-    if (scoreElem) scoreElem.innerText = score;
+    if (scoreElem) scoreElem.innerText = score1;
   } else {
     requestAnimationFrame(animateShot);
   }
 }
 
-// Event Listener Attachments
+// =========================================
+// GAME 2: PIN COLLECTOR PUTTING CHALLENGE
+// =========================================
+let canvas2, ctx2;
+let putterX = 250;
+let putterY = 160;
+let putterScore = 0;
+let targetPin = { x: 100, y: 80 };
+
+function initPuttingGame() {
+  canvas2 = document.getElementById("putting-canvas");
+  if (!canvas2) return;
+  ctx2 = canvas2.getContext("2d");
+
+  canvas2.addEventListener("mousemove", (e) => {
+    const rect = canvas2.getBoundingClientRect();
+    putterX = e.clientX - rect.left;
+    putterY = e.clientY - rect.top;
+    checkPinCollection();
+  });
+
+  spawnNewPin();
+  drawPuttingGreen();
+}
+
+function spawnNewPin() {
+  targetPin.x = Math.floor(Math.random() * (canvas2.width - 60)) + 30;
+  targetPin.y = Math.floor(Math.random() * (canvas2.height - 60)) + 30;
+}
+
+function drawPuttingGreen() {
+  if (!ctx2) return;
+
+  // Putting Surface
+  ctx2.fillStyle = "#15803d";
+  ctx2.fillRect(0, 0, canvas2.width, canvas2.height);
+
+  // Target Flag
+  ctx2.fillStyle = "#22c55e";
+  ctx2.beginPath();
+  ctx2.arc(targetPin.x, targetPin.y, 16, 0, Math.PI * 2);
+  ctx2.fill();
+
+  ctx2.strokeStyle = "#ffffff";
+  ctx2.lineWidth = 2;
+  ctx2.beginPath();
+  ctx2.moveTo(targetPin.x, targetPin.y);
+  ctx2.lineTo(targetPin.x, targetPin.y - 20);
+  ctx2.stroke();
+
+  ctx2.fillStyle = "#ef4444";
+  ctx2.beginPath();
+  ctx2.moveTo(targetPin.x, targetPin.y - 20);
+  ctx2.lineTo(targetPin.x + 10, targetPin.y - 15);
+  ctx2.lineTo(targetPin.x, targetPin.y - 10);
+  ctx2.closePath();
+  ctx2.fill();
+
+  // Golf Ball Cursor
+  ctx2.fillStyle = "#ffffff";
+  ctx2.shadowColor = "rgba(255, 255, 255, 0.8)";
+  ctx2.shadowBlur = 8;
+  ctx2.beginPath();
+  ctx2.arc(putterX, putterY, 8, 0, Math.PI * 2);
+  ctx2.fill();
+  ctx2.shadowBlur = 0;
+
+  requestAnimationFrame(drawPuttingGreen);
+}
+
+function checkPinCollection() {
+  const dx = putterX - targetPin.x;
+  const dy = putterY - targetPin.y;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+
+  if (dist < 20) {
+    putterScore++;
+    const putterElem = document.getElementById("putter-score");
+    if (putterElem) putterElem.innerText = putterScore;
+    fireConfetti();
+    spawnNewPin();
+  }
+}
+
+// DOM Event Listeners
 document.addEventListener("DOMContentLoaded", () => {
   const themeBtn = document.getElementById("theme-btn");
   if (themeBtn) themeBtn.addEventListener("click", toggleDarkMode);
-
-  const submitBtn = document.getElementById("submit-btn");
-  if (submitBtn) submitBtn.addEventListener("click", updateUserText);
 
   const poll1Yes = document.getElementById("poll1-yes");
   if (poll1Yes) poll1Yes.addEventListener("click", () => votePoll1(true));
@@ -209,8 +285,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const submitFavBtn = document.getElementById("submit-fav-btn");
   if (submitFavBtn) submitFavBtn.addEventListener("click", submitFavoriteCourse);
 
+  const submitBtn = document.getElementById("submit-btn");
+  if (submitBtn) submitBtn.addEventListener("click", updateUserText);
+
   const swingBtn = document.getElementById("swing-btn");
   if (swingBtn) swingBtn.addEventListener("click", swingClub);
 
   drawDrivingRange();
+  initPuttingGame();
 });
